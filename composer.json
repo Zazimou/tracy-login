@@ -14,14 +14,14 @@
         "GPL-3.0"
     ],
     "require": {
-        "php": ">=5.5.0",
-        "tracy/tracy": "~2.3",
-        "nette/security": "~2.3",
-        "latte/latte": "~2.3",
-        "nette/application": "~2.3"
+        "php": ">=7.4",
+        "nette/di": "~3.0",
+        "tracy/tracy": "~2.7",
+        "nette/security": "~3.0",
+        "latte/latte": "~2.8",
+        "nette/application": "~3.0"
     },
     "require-dev": {
-        "instante/php-test-suite": "@dev",
         "jakub-onderka/php-parallel-lint": "~0.6"
     },
     "autoload": {

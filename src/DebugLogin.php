@@ -3,14 +3,15 @@
 namespace Instante\Tracy\Login;
 
 use Latte\Engine;
-use Nette\Application\IRouter;
 use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\Http\Request;
 use Nette\InvalidArgumentException;
+use Nette\Routing\Router;
 use Nette\Security\User;
 use Tracy\IBarPanel;
+
 
 class DebugLogin implements IBarPanel
 {
@@ -18,16 +19,16 @@ class DebugLogin implements IBarPanel
     const ROUTE_LOGOUT = 'debugExtensionLogout';
 
     /** @var IUserDao */
-    private $userDao;
+    private IUserDao $userDao;
 
     /** @var Request */
-    private $request;
+    private Request $request;
 
     /** @var User */
-    private $user;
+    private User $user;
 
     /** @var array */
-    private $identifiers;
+    private array $identifiers;
 
     /**
      * @param IUserDao $userDao
@@ -118,15 +119,13 @@ class DebugLogin implements IBarPanel
     }
 
     /**
-     * @param IRouter $router
-     *
-     * @throws \Exception
+     * @param Router $router
      */
-    public static function addRoutes(IRouter &$router)
+    public static function addRoutes(Router &$router)
     {
         if (!$router instanceof RouteList || $router->getModule()) {
             throw new InvalidArgumentException(
-                'If you want to use Instante\DebugLogin then your main router ' .
+                'If you want to use Instante\DebugLogin then your main router '.
                 'must be an instance of Nette\Application\Routers\RouteList without module'
             );
         }

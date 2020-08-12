@@ -4,16 +4,16 @@ namespace Instante\Tracy\Login\DI;
 
 use Instante\Tracy\Login\DebugLogin;
 use Nette\DI\CompilerExtension;
-use Nette\DI\Statement;
+
 
 class DebugLoginExtension extends CompilerExtension
 {
-    public $defaults = [
-        'dao' => [
-            'class' => 'Instante\Tracy\Login\DoctrineUserDao',
-            'entity' => 'App\Model\User\User'
-            ],
-        'enabled' => FALSE,
+    public array $defaults = [
+        'dao'        => [
+            'class'  => 'Instante\Tracy\Login\DoctrineUserDao',
+            'entity' => 'App\Model\User\User',
+        ],
+        'enabled'    => false,
         'identifier' => 'email',
     ];
 
@@ -28,7 +28,7 @@ class DebugLoginExtension extends CompilerExtension
 
         if ($this->config['enabled'] && $debugEnvironment) {
             $builder->addDefinition($this->prefix('debugLogin'))
-                ->setClass(DebugLogin::class)
+                ->setFactory(DebugLogin::class)
                 ->addSetup('setConfig', [$config]);
 
             $entity = null;
@@ -37,8 +37,6 @@ class DebugLoginExtension extends CompilerExtension
                 if (key_exists('entity', $config['dao'])) {
                     $entity = $config['dao']['entity'];
                 }
-            } elseif ($config['dao'] instanceOf Statement) {
-                throw new \Exception('DebugLogin \'dao\' parameter shouldn\'t be defined as Statement. Please put class name into quotation marks.');
             } else {
                 preg_match('~^(.*?)(?:\((.*)\))?$~', $config['dao'], $matches);
                 $class = $matches[1];
@@ -48,7 +46,7 @@ class DebugLoginExtension extends CompilerExtension
             }
 
             $builder->addDefinition($this->prefix('userDao'))
-                ->setClass($class);
+                ->setFactory($class);
 
             if ($entity !== null) {
                 $builder->getDefinition($this->prefix('userDao'))->setArguments(['entity' => $entity]);

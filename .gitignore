@@ -1,2 +1,14 @@
 /vendor
 /composer.lock
+/.idea/$CACHE_FILE$
+/.idea/.gitignore
+/.idea/deployment.xml
+/.idea/dictionaries
+/.idea/encodings.xml
+/.idea/latte.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/tracy-login.iml
+/.idea/vagrant.xml
+/.idea/vcs.xml
